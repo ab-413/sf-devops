@@ -1,0 +1,7 @@
+user.email=alexmail.dev@gmail.com
+user.name=Alexander Budishev
+alias.history=log --graph
+remote.origin.url=https://github.com/AleXDev25/sf-devops.git
+remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+branch.master.remote=origin
+branch.master.merge=refs/heads/master
