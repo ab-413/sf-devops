@@ -1,0 +1,19 @@
+{
+  "name": "sf_node_example",
+  "version": "1.0.0",
+  "description": "SF DevOps Exercise",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "sf",
+    "devops",
+    "12"
+  ],
+  "author": "alex413",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.6.0"
+  }
+}
