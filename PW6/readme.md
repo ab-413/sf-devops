@@ -1,0 +1,6 @@
+## Проектная работа 6
+### Что нужно сделать:
+1. Создать пустой файл на файловой системе этой хостовой машины. ([emptyfile](https://github.com/AleXDev25/sf-devops/blob/master/PW6/emptyfile))
+2. Создать [Vagrantfile](https://github.com/AleXDev25/sf-devops/blob/master/PW6/Vagrantfile), при использовании которого будет создаваться ВМ под управлением Ubuntu 18.04.
+3. Настроить [Vagrantfile](https://github.com/AleXDev25/sf-devops/blob/master/PW6/Vagrantfile) таким образом, чтобы на эту машину при ее создании установились python3 и python3-pip пакеты, а также Python-библиотеки psycopg2 (для подключения к PostgreSQL СУБД) и Django (для работы с фронтендом).
+4. Дополнить [Vagrantfile](https://github.com/AleXDev25/sf-devops/blob/master/PW6/Vagrantfile) командой копирования созданного нами пустого файла на файловую систему созданной машины (в будущем при реальной работе с тестовым окружением, разработчики будут вместо этого пустого файла копировать на создаваемую ВМ свои скрипты и запускать их там).
