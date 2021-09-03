@@ -61,7 +61,6 @@ echo "######################"
 echo "## start pg at boot ##"
 echo "######################"
 
-sed -i -e 's/exit 0//g' /etc/rc.local
 echo "su -c '/usr/bin/pg_ctl start -l /usr/local/pgsql/data/log/logfile -D /usr/local/pgsql/data' postgres" >> /etc/rc.local
 
 echo "#####################"
