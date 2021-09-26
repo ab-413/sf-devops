@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: alex
+    groups: sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3....7w/A2wmto8= alex@AspireA715

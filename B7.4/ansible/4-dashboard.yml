@@ -1,0 +1,16 @@
+- hosts: master
+  become: yes
+  tasks:
+    - name: Install dashboard
+      become: yes
+      become_user: alex
+      shell: kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+
+    - name: Create service account
+      become: yes
+      become_user: alex
+      shell: "{{ item }}"
+      with_items:
+       - kubectl create serviceaccount admin -n default
+       - kubectl create clusterrolebinding default-sa-crb --clusterrole=cluster-admin --serviceaccount=default:admin
+       - kubectl get secrets -n default -o jsonpath="{.items[?(@.metadata.annotations['kubernetes\.io/service-account\.name']=='admin')].data.token}"|base64 --decode > token

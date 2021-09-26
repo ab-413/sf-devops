@@ -1,0 +1,15 @@
+[yandex_all]
+master  ansible_host=*master_public_ip*  ansible_connection=ssh
+node1   ansible_host=*node_public_ip*    ansible_connection=ssh
+node2   ansible_host=*node_public_ip*    ansible_connection=ssh
+
+[yandex_master]
+master  ansible_host=*master_public_ip*  ansible_connection=ssh
+
+[yandex_nodes]
+node1   ansible_host=*node_public_ip*    ansible_connection=ssh
+node2   ansible_host=*node_public_ip*    ansible_connection=ssh
+
+[yandex_all:vars]
+ansible_user=alex
+ansible_ssh_private_key_file=~/.ssh/id_rsa
