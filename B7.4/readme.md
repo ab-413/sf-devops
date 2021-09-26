@@ -28,3 +28,5 @@ kubectl proxy
 
 ---
 
+![](https://github.com/AleXDev25/sf-devops/tree/master/B7.4/k8s-dashboard.jpg)
+![](https://github.com/AleXDev25/sf-devops/tree/master/B7.4/k8s-dashboard-about.jpg)
