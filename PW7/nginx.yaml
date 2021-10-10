@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    env: test
+    owner: Alex
+    app: my-nginx-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      project: do12
+  template:
+    metadata:
+      labels:
+        project: do12
+    spec:
+      containers:
+        - name: my-web
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-deployment-service
+  labels:
+    env: test
+    owner: Alex
+spec:
+  type: LoadBalancer
+  selector:
+    project: do12
+  ports:
+    - name: my-web-listener
+      protocol: TCP
+      port: 8888
+      targetPort: 80
