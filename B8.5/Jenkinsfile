@@ -6,6 +6,11 @@ pipeline {
     }
 
     stages {
+        stage('Test') {
+            steps {
+                sh "ls -la"                 
+            }
+        }
         stage('Prepareing') {
             steps {
                 sh "cd B8.5"
