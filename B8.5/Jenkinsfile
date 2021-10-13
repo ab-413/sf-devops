@@ -1,17 +1,16 @@
 pipeline {
     agent any
-    environment {
-      PROJECT_NAME = "RFAM"
-      OWNER_NAME   = "alex413"
-    }
 
     stages {        
         stage('Run script') {
             steps {
-                sh "mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rfam < B8.5/script.sql > /var/www/html/index.html"                
-                echo "This is ${PROJECT_NAME}"
-                echo "Owner is ${OWNER_NAME}"
+                sh "mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rfam < B8.5/script.sql > output.txt"                
             }
-        }        
+        }
+        stage('Print output') {
+            steps {
+                sh "sed -n '1,20p' output.txt"                
+            }
+        }              
     }
 }
