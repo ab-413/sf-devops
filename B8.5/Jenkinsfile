@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    environment {
+      PROJECT_NAME = "RFAM"
+      OWNER_NAME   = "alex413"
+    }
+
+    stages {
+        stage('Prepareing') {
+            steps {
+                sh "cd B8.5"
+                sh "chmod +x rfam.sh"                
+            }
+        }
+        stage('Run script') {
+            steps {
+                sh "./rfam.sh"                
+                echo "This is ${PROJECT_NAME}"
+                echo "Owner is ${OWNER_NAME}"
+            }
+        }
+        stage('Copy file') {
+            steps {
+                sh "cp index.html /var/www/html/"                
+            }
+        }        
+    }
+}
