@@ -5,28 +5,12 @@ pipeline {
       OWNER_NAME   = "alex413"
     }
 
-    stages {
-        stage('Test') {
-            steps {
-                sh "ls -la"                 
-            }
-        }
-        stage('Prepareing') {
-            steps {
-                sh "cd B8.5"
-                sh "chmod +x rfam.sh"                
-            }
-        }
+    stages {        
         stage('Run script') {
             steps {
-                sh "./rfam.sh"                
+                sh "mysql --user rfamro --host mysql-rfam-public.ebi.ac.uk --port 4497 --database Rfam < B8.5/script.sql > /var/www/html/index.html"                
                 echo "This is ${PROJECT_NAME}"
                 echo "Owner is ${OWNER_NAME}"
-            }
-        }
-        stage('Copy file') {
-            steps {
-                sh "cp index.html /var/www/html/"                
             }
         }        
     }
