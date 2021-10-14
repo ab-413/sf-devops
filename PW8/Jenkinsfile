@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Compare md5') {
             steps {
-                dir('WORKSPACE/PW8') {
+                dir('PW8') {
                     sh 'md5sum index.html > index.md5'
                     sh 'rm index.html'
                     sh 'wget -H http://localhost:8080/index.html'
