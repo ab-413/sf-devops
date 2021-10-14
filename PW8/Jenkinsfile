@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build docker container') {
             steps {
-                sh 'cd PW8'
+                sh 'cd ./PW8'
                 sh 'docker build -t my-nginx .'
             }
         }
