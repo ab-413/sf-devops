@@ -13,7 +13,7 @@
 
 ### Решение
 
-[Jenkinsfile](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Jenkinsfile)
+[Jenkinsfile](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Jenkinsfile)\
 [Job log](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/job.log)
 
 Proof:
