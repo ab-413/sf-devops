@@ -9,3 +9,17 @@
 - Триггер для старта CI: внесение изменений в созданный вами файл `index.html` из п.3. В случае выявления ошибки (в двух предыдущих пунктах), должно отправляться оповещение вам в удобный канал связи — Telegram/Slack/email. Текст оповещения — на ваше усмотрение.
 - После выполнения CI созданный контейнер удаляется.
 5. Прислать ментору написанный вами для CI код (или скрин с описанием джоба), а также ссылку на репозиторий и на развернутую CI-систему.
+---
+
+### Решение
+
+[Jenkinsfile](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Jenkinsfile)
+[Job log](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/job.log)
+
+Proof:
+![](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Pics/jenkins-job-1.jpg)
+![](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Pics/jenkins-job-2.jpg)
+![](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Pics/jenkins-job-3.jpg)
+![](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Pics/jenkins-job-4.jpg)
+![Success job](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Pics/jenkins-pipeline-success.jpg)
+![Message in telegram](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Pics/jenkins-telegram.jpg)

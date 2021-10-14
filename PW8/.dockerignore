@@ -1,3 +1,5 @@
 Jenkinsfile
 README.MD
 Dockerfile
+*.log
+Pics

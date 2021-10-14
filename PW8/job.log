@@ -1,0 +1,148 @@
+Started by GitHub push by AleXDev25
+Obtained PW8/Jenkinsfile from git git@github.com:AleXDev25/sf-devops.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/lib/jenkins/workspace/Nginx
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential GItHub
+ > /usr/bin/git rev-parse --resolve-git-dir /var/lib/jenkins/workspace/Nginx/.git # timeout=10
+Fetching changes from the remote Git repository
+ > /usr/bin/git config remote.origin.url git@github.com:AleXDev25/sf-devops.git # timeout=10
+Fetching upstream changes from git@github.com:AleXDev25/sf-devops.git
+ > /usr/bin/git --version # timeout=10
+ > git --version # 'git version 2.17.1'
+using GIT_SSH to set credentials 
+ > /usr/bin/git fetch --tags --progress -- git@github.com:AleXDev25/sf-devops.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > /usr/bin/git rev-parse origin/PW8^{commit} # timeout=10
+Checking out Revision c9abc6f58dfb4eadb1a45fa538978198b72be351 (origin/PW8)
+ > /usr/bin/git config core.sparsecheckout # timeout=10
+ > /usr/bin/git checkout -f c9abc6f58dfb4eadb1a45fa538978198b72be351 # timeout=10
+Commit message: "Fix"
+ > /usr/bin/git rev-list --no-walk 42b10be70e4704be42d8c257325d9ad72e99dc9c # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Build docker container)
+[Pipeline] sh
++ docker build -t my-nginx ./PW8
+Sending build context to Docker daemon   5.12kB
+
+Step 1/2 : FROM nginx:latest
+latest: Pulling from library/nginx
+b380bbd43752: Already exists
+fca7e12d1754: Already exists
+745ab57616cb: Already exists
+a4723e260b6f: Already exists
+1c84ebdff681: Already exists
+858292fd2e56: Already exists
+Digest: sha256:644a70516a26004c97d0d85c7fe1d0c3a67ea8ab7ddf4aff193d9f301670cf36
+Status: Downloaded newer image for nginx:latest
+ ---> 87a94228f133
+Step 2/2 : COPY ./index.html /usr/share/nginx/html/index.html
+ ---> 49cc7536f276
+Successfully built 49cc7536f276
+Successfully tagged my-nginx:latest
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run docker container)
+[Pipeline] sh
++ docker run -dp 9889:80 my-nginx
+5de1bf07037a7ca995c81117f0c6872773ceeb730c3a866387ef4854ab445926
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Check status code)
+[Pipeline] sh
+++ curl -o /dev/null -s -w '%{http_code}\n' http://localhost:9889
++ echo HTTP status code: 200
+HTTP status code: 200
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
+++ curl -o /dev/null -s -w '%{http_code}\n' http://localhost:9889
++ echo HTTP status code: 200
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Compare md5)
+[Pipeline] dir
+Running in /var/lib/jenkins/workspace/Nginx/PW8
+[Pipeline] {
+[Pipeline] sh
++ md5sum index.html
+[Pipeline] sh
++ rm index.html
+[Pipeline] sh
++ wget -H http://localhost:9889/index.html
+--2021-10-14 06:35:35--  http://localhost:9889/index.html
+Resolving localhost (localhost)... 127.0.0.1
+Connecting to localhost (localhost)|127.0.0.1|:9889... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 102 [text/html]
+Saving to: ‘index.html’
+
+     0K                                                       100% 33.6M=0s
+
+2021-10-14 06:35:35 (33.6 MB/s) - ‘index.html’ saved [102/102]
+
+[Pipeline] sh
++ md5sum -c index.md5
+index.html: OK
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
++ md5sum -c index.md5
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Delete docker containers)
+[Pipeline] sh
+++ docker ps -q
++ docker rm -f 5de1bf07037a
+5de1bf07037a
+[Pipeline] sh
+++ docker images -q
++ docker rmi -f 49cc7536f276 87a94228f133
+Untagged: my-nginx:latest
+Deleted: sha256:49cc7536f276271009d138194e2a81a4f64c8c81f4dc52a6f90405ecce0aded9
+Deleted: sha256:46a18997a9d77dae7c89dc154c74ef07d2636cc931bc870a115014cca7261c06
+Untagged: nginx:latest
+Untagged: nginx@sha256:644a70516a26004c97d0d85c7fe1d0c3a67ea8ab7ddf4aff193d9f301670cf36
+Deleted: sha256:87a94228f133e2da99cb16d653cd1373c5b4e8689956386c1c12b60a20421a02
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] withCredentials
+Masking supported pattern matches of $TOKEN or $CHAT_ID
+[Pipeline] {
+[Pipeline] sh
+Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [CHAT_ID, TOKEN]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
++ curl -s -X POST https://api.telegram.org/bot****/sendMessage -d chat_id=**** -d parse_mode=markdown -d 'text=*Job:* Nginx%0A*Branch*: origin/PW8%0A*Status*: `SUCCESS`%0A*Detail:*%0A*MD5 check*: index.html: OK%0A*HTTP status code:* HTTP status code: 200'
+{"ok":true,"result":{"message_id":11,"from":{"id":***********,"is_bot":true,"first_name":"JenkinsSF12","username":"JenkinsSF12_bot"},"chat":{"id":****,"title":"Test","type":"group","all_members_are_administrators":true},"date":1634193337,"text":"Job: Nginx\nBranch: origin/PW8\nStatus: SUCCESS\nDetail:\nMD5 check: index.html: OK\nHTTP status code: HTTP status code: 200","entities":[{"offset":0,"length":4,"type":"bold"},{"offset":11,"length":6,"type":"bold"},{"offset":30,"length":6,"type":"bold"},{"offset":38,"length":7,"type":"code"},{"offset":46,"length":7,"type":"bold"},{"offset":54,"length":9,"type":"bold"},{"offset":80,"length":17,"type":"bold"}]}}
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
