@@ -37,16 +37,14 @@ pipeline {
         success{
             withCredentials([string(credentialsId: 'TELE_TOKEN', variable: 'TOKEN'), string(credentialsId: 'chat_ID', variable: 'CHAT_ID')]) {
                 sh  ("""
-                curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=${CHAT_ID} -d parse_mode=markdown -d 
-                text='Job: *${env.JOB_NAME}*%0A*Branch*: ${env.GIT_BRANCH}%0A*Status* : `OK`'
+                curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=${CHAT_ID} -d parse_mode=markdown -d text='Job: *${env.JOB_NAME}*%0A*Branch*: ${env.GIT_BRANCH}%0A*Status* : `OK`'
                 """)
             }
         }
         failure{
             withCredentials([string(credentialsId: 'TELE_TOKEN', variable: 'TOKEN'), string(credentialsId: 'chat_ID', variable: 'CHAT_ID')]) {
                 sh  ("""
-                curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=${CHAT_ID} -d parse_mode=markdown -d 
-                text='*${env.JOB_NAME}* : POC  *Branch*: ${env.GIT_BRANCH} *Build* : `not OK` *Published* = `no`'
+                curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage -d chat_id=${CHAT_ID} -d parse_mode=markdown -d text='*${env.JOB_NAME}* : POC  *Branch*: ${env.GIT_BRANCH} *Build* : `not OK` *Published* = `no`'
                 """)
             }
         }        
