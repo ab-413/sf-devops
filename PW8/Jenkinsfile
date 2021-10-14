@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build docker container') {
+            steps {
+                sh 'cd PW8'
+                sh 'docker build -t my-nginx .'
+            }
+        }
+        stage('Run docker container') {
+            steps {
+                sh 'docker run -dp 9889:80 my-nginx'                
+            }
+        }
+        stage('Check status code') {
+            steps {
+                echo "echo HTTP status code: $(curl -o /dev/null -s -w '%{http_code}\n' http://localhost:9889)"                
+            }
+        }
+        stage('Compare md5') {
+            steps {
+                echo "====++++MD5++++===="
+            }
+        }
+        stage('Delete docker container') {
+            steps {
+                sh 'docker rm --force my-nginx'
+                sh 'docker rmi my-nginx:latest'
+            }
+        }
+    }
+}
