@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Check status code') {
             steps {
-                echo "echo HTTP status code: $(curl -o /dev/null -s -w '%{http_code}\n' http://localhost:9889)"                
+                echo "HTTP status code: $(curl -o /dev/null -s -w '%{http_code}\n' http://localhost:9889)"                
             }
         }
         stage('Compare md5') {
