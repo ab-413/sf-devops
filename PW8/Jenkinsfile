@@ -2,9 +2,8 @@ pipeline {
     agent any
     stages {
         stage('Build docker container') {
-            steps {
-                sh 'cd ./PW8'
-                sh 'docker build -t my-nginx .'
+            steps {                
+                sh 'docker build -t my-nginx ./PW8'
             }
         }
         stage('Run docker container') {
