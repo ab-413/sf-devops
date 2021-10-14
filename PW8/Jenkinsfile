@@ -33,4 +33,12 @@ pipeline {
             }
         }
     }
+    post{
+        success{
+            telegramSend 'Success'
+        }
+        failure{
+            telegramSend 'Failed'
+        }        
+    }
 }
