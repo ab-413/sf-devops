@@ -15,7 +15,10 @@ pipeline {
             steps {
                 sh 'echo HTTP status code: $(curl -o /dev/null -s -w "%{http_code}\\n" http://localhost:9889)'
                 script {
-                    env.HTTP_CODE = sh 'echo HTTP status code: $(curl -o /dev/null -s -w "%{http_code}\\n" http://localhost:9889)'
+                    env.HTTP_CODE = sh (
+                        script: 'echo HTTP status code: $(curl -o /dev/null -s -w "%{http_code}\\n" http://localhost:9889)',
+                        returnStdout: true
+                    ).trim()
                 }
             }
         }
@@ -27,7 +30,10 @@ pipeline {
                     sh 'wget -H http://localhost:9889/index.html'
                     sh 'md5sum -c index.md5'
                     script {
-                        env.MD5 = sh 'md5sum -c index.md5'
+                        env.MD5 = sh (
+                        script: 'md5sum -c index.md5',
+                        returnStdout: true
+                        ).trim()
                     }    
                 }
             }
@@ -40,25 +46,15 @@ pipeline {
         }
     }
     post{
-        success{
+        always{
             withCredentials([string(credentialsId: 'TELE_TOKEN', variable: 'TOKEN'), string(credentialsId: 'chat_ID', variable: 'CHAT_ID')]) {
                 sh  ("""
                 curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage \
                 -d chat_id=${CHAT_ID} \
                 -d parse_mode=markdown \
-                -d text='*Job:* ${env.JOB_NAME}%0A*Branch*: ${env.GIT_BRANCH}%0A*Status* : `SUCCESS`%0A*Detail:*%0A*MD5 check: ${env.MD5}%0A*HTTP status code:* ${env.HTTP_CODE}'
+                -d text='*Job:* ${env.JOB_NAME}%0A*Branch*: ${env.GIT_BRANCH}%0A*Status*: `${currentBuild.currentResult}`%0A*Detail:*%0A*MD5 check*: ${env.MD5}%0A*HTTP status code:* ${env.HTTP_CODE}'
                 """)
             }
-        }
-        failure{
-            withCredentials([string(credentialsId: 'TELE_TOKEN', variable: 'TOKEN'), string(credentialsId: 'chat_ID', variable: 'CHAT_ID')]) {
-                sh  ("""
-                curl -s -X POST https://api.telegram.org/bot${TOKEN}/sendMessage \
-                -d chat_id=${CHAT_ID} \
-                -d parse_mode=markdown \
-                -d text='*Job:* ${env.JOB_NAME}%0A*Branch*: ${env.GIT_BRANCH}%0A*Status* : `FAILURE`'
-                """)
-            }
-        }        
+        }       
     }
 }
