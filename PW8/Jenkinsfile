@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build docker container') {
             steps {                
-                sh 'docker build --build-arg BUILD_ID -t my-nginx ./PW8'
+                sh 'docker build -t my-nginx ./PW8'
             }
         }
         stage('Run docker container') {
@@ -18,12 +18,18 @@ pipeline {
         }
         stage('Compare md5') {
             steps {
-                echo "====++++MD5++++===="
+                dir('WORKSPACE/PW8') {
+                    sh 'md5sum index.html > index.md5'
+                    sh 'rm index.html'
+                    sh 'wget -H http://localhost:8080/index.html'
+                    sh 'md5sum -c index.md5'    
+                }
             }
         }
         stage('Delete docker containers') {
             steps {
-                sh 'docker image prune --filter label=stage=builder --filter label=build=$BUILD_ID'
+                sh 'docker rm -f $(docker ps -q)'
+                sh 'docker rmi -f $(docker images -q)'
             }
         }
     }
