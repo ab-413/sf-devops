@@ -16,7 +16,7 @@ pipeline {
                 sh 'echo HTTP status code: $(curl -o /dev/null -s -w "%{http_code}\\n" http://localhost:9889)'
                 script {
                     env.HTTP_CODE = sh (
-                        script: 'echo HTTP status code: $(curl -o /dev/null -s -w "%{http_code}\\n" http://localhost:9889)',
+                        script: 'curl -o /dev/null -s -w "%{http_code}\\n" http://localhost:9889',
                         returnStdout: true
                     ).trim()
                 }
