@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build docker container') {
             steps {                
-                sh 'docker build -t my-nginx ./PW8'
+                sh 'docker build --build-arg BUILD_ID -t my-nginx ./PW8'
             }
         }
         stage('Run docker container') {
@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Check status code') {
             steps {
-                echo 'HTTP status code: $(curl -o /dev/null -s -w "%{http_code}\\n" http://localhost:9889)'        
+                sh 'echo HTTP status code: $(curl -o /dev/null -s -w "%{http_code}\\n" http://localhost:9889)'
             }
         }
         stage('Compare md5') {
@@ -21,10 +21,9 @@ pipeline {
                 echo "====++++MD5++++===="
             }
         }
-        stage('Delete docker container') {
+        stage('Delete docker containers') {
             steps {
-                sh 'docker rm --force my-nginx'
-                sh 'docker rmi my-nginx:latest'
+                sh 'docker image prune --filter label=stage=builder --filter label=build=$BUILD_ID'
             }
         }
     }
