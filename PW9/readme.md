@@ -35,7 +35,7 @@
 6. Go to http://yandex_vm_ext_IP
 7. **Profit!!!**
 
-![](../blob/master/PW9/pics/sfapp_proof.jpg)
+![](https://github.com/AleXDev25/sf-devops/tree/master/PW9/pics/sfapp_proof.jpg)
 
 Docker image sizes
 
@@ -46,6 +46,6 @@ Docker image sizes
 |sfapp:origin   |python:3.9.0       |905MB     |
 |sfapp:builder  |python:3.9.0 as builder|135MB |
 
-![](../blob/master/PW9/pics/image_sizes.jpg)
+![](https://github.com/AleXDev25/sf-devops/tree/master/PW9/pics/image_sizes.jpg)
 
 >*Размер sfapp:alpine больше slim, хотя базовый образ всего 46М, потому что для установки psycopg2 не хватает зависимостей, для исправления приходится запихивать это: `RUN apk update && apk add postgresql-dev gcc python3-dev musl-dev` в Dockerfile.
