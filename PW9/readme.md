@@ -28,7 +28,7 @@
 ### Решение
 
 1. *Clone repo
-2. `sudo mkdir /srv/app && sudo cp -R . $_`
+2. `sudo mkdir /srv/app && sudo rsync -av --progress . $_ --exclude pics`
 3. `cd /srv/app`
 4. `docker build -t sfapp .`
 5. `docker run -d -p 80:5000 -v /srv/app:/srv/app sfapp:latest` 
