@@ -1,4 +1,5 @@
 ### Задание B10.4.1
+
 Предлагаем вам в качестве практики:
 
 1. Написать свой Playbook, который будет устанавливать и запускать Docker на локальной машине.
@@ -6,7 +7,7 @@
 
 ---
 
-Answer:
+Решение:
 
-1. [Docker playbook](../blob/B10.4.1/docker-playbook.yml)
-2. [MySQL Server playbook](../blob/B10.4.1/mysql-playbook.yml)
+1. [Docker playbook](../B10.4.1/docker-playbook.yml)
+2. [MySQL Server playbook](../B10.4.1/mysql-playbook.yml)
