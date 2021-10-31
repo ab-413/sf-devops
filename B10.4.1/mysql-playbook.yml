@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  become: yes
+  tasks:
+    - name: Install MySQL
+      apt:
+        name: mysql-server
+        state: present
+        update_cache: yes
+
+    - name: Check service
+      shell: systemctl status mysql
+      register: mysql_state
+
+    - debug:
+        var: mysql_state.stdout_lines[2]
