@@ -1,0 +1,7 @@
+---
+- name: Install vsftpd
+  hosts: remote
+  become: yes
+
+  roles:
+    - vsftpd
