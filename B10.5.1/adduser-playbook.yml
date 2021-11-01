@@ -1,0 +1,26 @@
+---
+- hosts: remote
+  become: yes
+
+  tasks:
+    - name: Create user
+      user:
+        name: user1
+        create_home: yes
+
+    - name: Ensures .ssh dir exists
+      file:
+        path: /home/user1/.ssh
+        owner: user1
+        group: user1
+        mode: 0600
+        state: directory
+
+    - name: Copy encrypted id_rsa
+      copy:
+        src: /home/alex/.ssh/id_rsa.pub.enc
+        dest: /home/user1/.ssh/id_rsa.pub
+        decrypt: yes
+        owner: user1
+        group: user1
+        mode: 0400

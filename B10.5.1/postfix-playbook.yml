@@ -1,0 +1,18 @@
+---
+- hosts: remote
+  become: yes
+
+  tasks:
+    - name: Install Postfix
+      apt:
+        name: postfix
+        state: present
+        update_cache: yes
+      tags: init postfix
+
+    - name: Remove Postfix
+      apt:
+        name: postfix
+        state: absent
+        purge: yes
+      tags: drop postfix
