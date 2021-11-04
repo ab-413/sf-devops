@@ -1,0 +1,47 @@
+---
+# tasks file for nginx_phpfpm
+- name: Install Nginx and php-fpm
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+      - nginx
+      - php-fpm
+
+- name: Get php version
+  shell: php -v | awk 'NR==1 {match($2, /[0-9]\.[0-9]/); res=substr($2, RSTART, RLENGTH); print res}'
+  register: php_version
+
+- name: Create dir
+  file:
+    path: "{{ documentRoot }}"
+    state: directory
+    mode: 0755
+
+- name: Copy index.php
+  copy:
+    src: "{{ files }}/index.php"
+    dest: "{{ documentRoot }}/index.php"
+    owner: www-data
+    group: www-data
+    mode: 0665
+
+- name: Delete default site config
+  file:
+    path: "{{ sitesEnabled }}/default"
+    state: absent   
+
+- name: Copy nginx server config
+  template:
+    src: mysite.com.j2
+    dest: "{{ sitesAvailable }}/mysite.com"
+  notify: Restart nginx
+
+- name: Enable config
+  file:
+    src: "{{ sitesAvailable }}/mysite.com"
+    dest: "{{ sitesEnabled }}/mysite.com"
+    state: link
+  notify: Restart nginx

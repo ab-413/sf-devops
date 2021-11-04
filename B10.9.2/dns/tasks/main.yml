@@ -1,0 +1,43 @@
+---
+# tasks file for dns
+- name: Disable resolved service
+  service:
+    name: systemd-resolved
+    state: stopped
+    enabled: no
+
+- name: Remove resolv.conf
+  file:
+    path: /etc/resolv.conf
+    state: absent
+
+- name: Create new resolv.conf
+  copy:
+    src: "{{ role_path }}/files/resolv.conf"
+    dest: /etc/resolv.conf
+    mode: 0777
+
+- name: Install dnsmasq
+  apt:
+    name: dnsmasq
+    state: present
+    update_cache: yes
+
+- name: Add DNS record
+  lineinfile:
+    path: /etc/hosts
+    state: present
+    line: "127.0.0.1 testdns.sf"
+
+- name: Restart service
+  service:
+    name: dnsmasq
+    state: restarted
+
+- name: Check dnsmaq functionality using ‘dig’
+  shell: dig testdns.sf +short
+  register: digoutput
+
+- name: Show dig output
+  debug:
+    var: digoutput.stdout

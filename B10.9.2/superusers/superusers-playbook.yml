@@ -1,0 +1,33 @@
+---
+- hosts: remote
+  become: yes
+
+  tasks:
+    - name: Create group 'superusers'
+      group:
+        name: superusers
+        state: present
+
+    - name: Include vars
+      include_vars:
+        file: pass.yml
+
+    - name: Create users and add in group 'superuser, sudo'
+      user:
+        name: "{{ item.name }}"
+        password: "{{ item.pass }}"
+        create_home: yes
+        groups: superusers, sudo
+        append: yes
+        state: present
+      loop:
+        - { name: 'user2', pass: "{{ vault_user2_pass | password_hash('sha512')}}" }
+        - { name: 'user3', pass: "{{ vault_user3_pass | password_hash('sha512')}}" }
+    
+    - name: Allow 'superusers' group to have passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%superusers'
+        line: '%superusers ALL=(ALL) NOPASSWD: ALL'
+        validate: /usr/sbin/visudo -cf %s

@@ -1,0 +1,7 @@
+---
+- name: Role for dnsmasq
+  hosts: remote
+  become: yes
+
+  roles:
+    - dns

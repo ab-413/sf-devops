@@ -1,0 +1,5 @@
+---
+# vars file for nginx_phpfpm
+documentRoot: /opt/nginx/ansible
+sitesAvailable: /etc/nginx/sites-available
+sitesEnabled: /etc/nginx/sites-enabled

@@ -1,0 +1,6 @@
+---
+# handlers file for nginx_phpfpm
+- name: Restart nginx
+  service:
+    name: nginx
+    state: restarted

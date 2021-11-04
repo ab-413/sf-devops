@@ -1,0 +1,12 @@
+---
+- name: Role for Nginx+php-fpm
+  hosts: remote
+  become: yes
+
+  vars:
+    - files: "{{ role_path }}/files/"
+  vars_files:
+    - "{{ role_path }}/vars/main.yml"
+
+  roles:
+    - nginx_phpfpm

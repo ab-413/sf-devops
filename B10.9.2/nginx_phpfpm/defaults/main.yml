@@ -1,0 +1,3 @@
+---
+# defaults file for nginx_phpfpm
+documentRoot: /var/www/html
