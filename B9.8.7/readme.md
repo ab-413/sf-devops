@@ -10,7 +10,7 @@
 
 `wget $(docker run --rm getfav -u [url])`
 
-![](https://github.com/AleXDev25/sf-devops/blob/master/B9.8.7/pics/example.jpg)
+![](../B9.8.7/pics/example.jpg)
 
 ### Мысли
 

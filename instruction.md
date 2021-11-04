@@ -2,7 +2,7 @@
 
 ### Репозиторий
 ```
-https://github.com/AleXDev25/sf-devops
+https://github.com/ab-413/somerepo
 ```
 
 ### Внесение правок
@@ -31,7 +31,7 @@ https://github.com/AleXDev25/sf-devops
 $ git config --global user.name "You name"
 $ git config --global user.email "You email"
 
-$ git clone https://github.com/AleXDev25/sf-devops.git
+$ git clone https://github.com/ab-413/somerepo.git
 $ git checkout -b OP-12_Add-API
 
 *edit code*
