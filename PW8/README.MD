@@ -13,13 +13,17 @@
 
 ### Решение
 
-[Jenkinsfile](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Jenkinsfile)\
-[Job log](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/job.log)
+[Jenkinsfile](../PW8/Jenkinsfile)\
+[Job log](../PW8/job.log)
 
-Proof:
-![](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Pics/jenkins-job-1.jpg)
-![](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Pics/jenkins-job-2.jpg)
-![](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Pics/jenkins-job-3.jpg)
-![](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Pics/jenkins-job-4.jpg)
-![Success job](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Pics/jenkins-pipeline-success.jpg)
-![Message in telegram](https://github.com/AleXDev25/sf-devops/blob/PW8/PW8/Pics/jenkins-telegram.jpg)
+<details>
+<summary>Proof:</summary>
+
+![](../PW8/Pics/jenkins-job-1.jpg)
+![](../PW8/Pics/jenkins-job-2.jpg)
+![](../PW8/Pics/jenkins-job-3.jpg)
+![](../PW8/Pics/jenkins-job-4.jpg)
+![Success job](../PW8/Pics/jenkins-pipeline-success.jpg)
+![Message in telegram](../PW8/Pics/jenkins-telegram.jpg)
+
+</details>
