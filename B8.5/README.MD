@@ -27,10 +27,14 @@ Jenkins выполняет джобу про триггеру из GitHub (push)
 - Stage `Run script` - Запуск клиента mysql и выполнение запроса к БД с сохраниением вывода в файл `output.txt`
 - Stage `Print output` - Вывод результата запроса, первые 20 строк.
 
-[Console output](https://github.com/AleXDev25/sf-devops/blob/B8.5/B8.5/job.log)
+[Console output](../B8.5/job.log)
 
-### Настройки джобы:
-![](https://github.com/AleXDev25/sf-devops/blob/B8.5/B8.5/Pics/jenkins-job-1.jpg)
-![](https://github.com/AleXDev25/sf-devops/blob/B8.5/B8.5/Pics/jenkins-job-2.jpg)
-![](https://github.com/AleXDev25/sf-devops/blob/B8.5/B8.5/Pics/jenkins-job-3.jpg)
-![](https://github.com/AleXDev25/sf-devops/blob/B8.5/B8.5/Pics/jenkins-job-4.jpg)
+<details>
+<summary>Настройки джобы:</summary>
+
+![](../B8.5/Pics/jenkins-job-1.jpg)
+![](../B8.5/Pics/jenkins-job-2.jpg)
+![](../B8.5/Pics/jenkins-job-3.jpg)
+![](../B8.5/Pics/jenkins-job-4.jpg)
+
+</details>
