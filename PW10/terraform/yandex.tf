@@ -14,21 +14,21 @@ provider "yandex" {
   zone      = var.ya_zone
 }
 
-resource "null_resource" "gen_inventory" {
-  provisioner "local-exec" {
-    command = "python3 /home/alex/sf-devops/PW10/ansible/inventory_gen.py"
-  }
-  depends_on = [
-    yandex_compute_instance.vm-1,
-    yandex_compute_instance.vm-2,
-    yandex_compute_instance.vm-3
-  ]
-}
+# resource "null_resource" "gen_inventory" {
+#   provisioner "local-exec" {
+#     command = "python3 /home/alex/sf-devops/PW10/ansible/inventory_gen.py"
+#   }
+#   depends_on = [
+#     yandex_compute_instance.vm-1,
+#     yandex_compute_instance.vm-2,
+#     yandex_compute_instance.vm-3
+#   ]
+# }
 
-# Add waiting 1 min for hosts network up
-resource "null_resource" "run_ansible" {
-  provisioner "local-exec" {
-    command = "sleep 60 && ansible-playbook -i /home/alex/sf-devops/PW10/ansible/hosts.ini /home/alex/sf-devops/PW10/ansible/pw10.yml"
-  }
-  depends_on = [null_resource.gen_inventory]
-}
+# # Add waiting 1:20 min for hosts network up
+# resource "null_resource" "run_ansible" {
+#   provisioner "local-exec" {
+#     command = "sleep 80 && ansible-playbook -i /home/alex/sf-devops/PW10/ansible/hosts_auto.ini /home/alex/sf-devops/PW10/ansible/pw10.yml"
+#   }
+#   depends_on = [null_resource.gen_inventory]
+# }
