@@ -1,0 +1,83 @@
+---
+# tasks file for db
+- name: Install PostgreSQL for redhat os family
+  block:
+    - name: Install the repository
+      yum_repository:
+        name: "https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm"
+        state: present
+
+    - name: Install PostgreSQL
+      yum:
+        name: postgresql{{ pgsql_version }}-server
+        update_cache: yes
+        state: present
+
+    - name: Enable automatic start
+      service:
+        name: postgresql
+        enabled: yes
+        state: started
+
+  when: ansible_facts['os_family']|lower == 'redhat'
+
+- name: Install PostgreSQL for debian os family
+  block:
+    - name: Import the repository signing key
+      apt_key:
+        url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+        state: present
+
+    - name: Create the file repository configuration
+      apt_repository:
+        repo: deb http://apt.postgresql.org/pub/repos/apt {{ ansible_lsb.codename }}-pgdg main
+        update_cache: yes
+        state: present
+        filename: pgdg
+
+    - name: Install PostgreSQL
+      apt:
+        name: postgresql-{{ pgsql_version }}
+        update_cache: yes
+        state: present
+
+    - name: Enable automatic start
+      service:
+        name: postgresql
+        enabled: yes
+        state: started
+
+  when: ansible_facts['os_family']|lower == 'debian'
+
+- name: Setup PostgreSQL config
+  block:
+    - name: Create dir
+      file:
+        path: "{{ data_path }}"
+        state: directory
+        mode: 0700
+        owner: postgres
+        group: postgres
+
+    - name: Stop PostgreSQL service
+      service:
+        name: postgresql
+        state: stopped
+
+    - name: Move data files to new dir
+      copy:
+        remote_src: yes
+        src: /var/lib/postgresql/{{pgsql_version}}/main/
+        dest: "{{ data_path }}"
+        owner: postgres
+        group: postgres
+
+    - name: Edit config file
+      lineinfile:
+        path: /etc/postgresql/{{ pgsql_version }}/main/postgresql.conf
+        regexp: '^data_directory.*'
+        line: "data_directory = '{{ data_path }}'"
+        state: present
+      notify: Restart PostgreSQL service
+
+  when: data_path is defined

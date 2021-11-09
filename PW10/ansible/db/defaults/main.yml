@@ -1,0 +1,4 @@
+---
+# defaults file for db
+data_path: /var/lib/postgresql/{{pgsql_version}}/main
+pgsql_version: 14

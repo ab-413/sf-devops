@@ -1,0 +1,67 @@
+---
+# tasks file for docker
+- name: Install Docker for debian os family
+  block:
+    - name: Install dependencies packages
+      apt:
+        name: "{{ packages }}"
+        state: present
+        update_cache: yes
+      vars:
+        packages:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+          - software-properties-common
+          - acl
+
+    - name: Add apt key for Docker
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        keyring: /usr/share/keyrings/docker-archive-keyring.gpg
+        state: present
+
+    - name: Add Docker repository in sorces list
+      apt_repository:
+        repo: deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+        state: present
+        filename: docker
+
+    - name: Install Docker
+      apt:
+        name: "{{ packages }}"
+        state: present
+        update_cache: yes
+      vars:
+        packages:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+
+  when: ansible_facts['os_family']|lower == 'debian'
+
+- name: Install Docker for redhat os family
+  block:
+    - name: Install dependencies packages
+      yum:
+        name: yum-utils
+        state: present
+        update_cache: yes
+
+    - name: Set up the stable repository    
+      shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    
+    - name: Install Docker
+      yum:
+        name: "{{ packages }}"
+        state: present
+        update_cache: yes
+      vars:
+        packages:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+
+  when: ansible_facts['os_family']|lower == 'redhat'

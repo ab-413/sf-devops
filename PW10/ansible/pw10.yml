@@ -1,0 +1,14 @@
+---
+- name: Install Docker on 'app' group instances
+  hosts: app
+  become: yes
+
+  roles:
+    - docker
+
+- name: Install PostgeSQL on 'database' group instances
+  hosts: database
+  become: yes
+
+  roles:
+    - db

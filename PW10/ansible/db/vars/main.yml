@@ -1,0 +1,4 @@
+---
+# vars file for db
+data_path: /opt/pgsql/data
+pgsql_version: 13
