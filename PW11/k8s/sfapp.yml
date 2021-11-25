@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sfapp
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      sf: web
+  template:
+    metadata:
+      labels:
+        sf: web
+    spec:
+      containers:
+      - name: sfapp
+        image: alex413/sfapp:latest
+        resources: {}
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sfapp-entrypoint
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    sf: web
+  ports:
+  - port: 5000
+    targetPort: 5000
+    nodePort: 30001

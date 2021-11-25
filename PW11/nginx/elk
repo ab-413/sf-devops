@@ -1,0 +1,17 @@
+server {
+    listen 80;
+    server_name elk.ab413.ru;
+
+    auth_basic "Restricted Access";
+    auth_basic_user_file /etc/nginx/htpasswd.users;
+
+    access_log /var/log/nginx/elk.ab413.ru-access.log;
+    error_log /var/log/nginx/elk.ab413.ru-error.log;
+
+location / {
+    proxy_pass http://elk.ru-central1.internal:5601;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Real-IP $remote_addr;
+    }
+}

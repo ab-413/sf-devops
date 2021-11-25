@@ -1,0 +1,6 @@
+__pycache__
+venv
+log.json
+readme.md
+.gitignore
+sfapp.yml
