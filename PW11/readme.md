@@ -67,8 +67,14 @@
    <h3>Логи Кибаны</h3>
    <img src="../PW11/pics/elk-kibana.jpg">
    <br>
+   <h3>Работа приложения</h3>
+   <img src="../PW11/pics/app-result.jpg">
+   <br>
    <h3>Логи приложения</h3>
    <img src="../PW11/pics/elk-sfapp.jpg">
+   <br>
+   <h3>Дашборд приложения</h3>
+   <img src="../PW11/pics/elk-sfapp-dasboard.jpg">
    <br>
    <h3>Логи Nginx</h3>
    <img src="../PW11/pics/elk-nginx.jpg">
