@@ -1,0 +1,77 @@
+version: "3.2"
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus:/etc/prometheus/
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    ports:
+      - 9090:9090
+    restart: always
+
+  node-exporter:
+    image: prom/node-exporter
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    hostname: monitoring
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+    ports:
+      - 9100:9100
+    restart: always
+
+  blackbox-exporter:
+    image: prom/blackbox-exporter
+    restart: always
+    ports:
+      - 9115:9115
+    volumes:
+      - "./blackbox:/blackbox"
+    command:
+      - --config.file=/blackbox/blackbox.yml
+
+  alertmanager-bot:
+    command:
+      - --alertmanager.url=http://alertmanager:9093
+      - --log.level=info
+      - --store=bolt
+      - --bolt.path=/data/bot.db
+    environment:
+      TELEGRAM_ADMIN: "378732609"
+      TELEGRAM_TOKEN: 2111134478:AAGRZFc9T1LHGBvhGdVA-Fww5CYV9vfZ66U
+    image: metalmatze/alertmanager-bot:0.4.3
+    ports:
+      - 8080:8080
+    restart: always
+    volumes:
+      - ./data:/data
+
+  alertmanager:
+    image: prom/alertmanager
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager/:/etc/alertmanager/
+    restart: always
+    command:
+      - "--config.file=/etc/alertmanager/config.yml"
+      - "--storage.path=/etc/alertmanager/data"
+    user: "root"
+
+  grafana:
+    image: grafana/grafana
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    restart: always
+    user: "root"
