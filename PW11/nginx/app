@@ -1,8 +1,8 @@
 server {
     listen 80;
     server_name app.ab413.ru;
-    access_log /var/log/nginx/artifactory.ab413.ru-access.log;
-    error_log /var/log/nginx/artifactory.ab413.ru-error.log;
+    access_log /var/log/nginx/app.ab413.ru-access.log;
+    error_log /var/log/nginx/app.ab413.ru-error.log;
 
 location / {
     proxy_pass http://haproxy.ru-central1.internal;
