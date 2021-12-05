@@ -68,6 +68,9 @@
    <br>
    <h3>Dashboard for PW12</h3>
    <img src="../PW12/pics/grafana_nginx_dashboard.jpg">
+   <br>
+   <h3>Telegram</h3>
+   <img src="../PW12/pics/grafana_tg_alert.jpg">
 
 </div>
 
